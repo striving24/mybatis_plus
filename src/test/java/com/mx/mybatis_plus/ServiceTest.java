@@ -1,10 +1,14 @@
 package com.mx.mybatis_plus;
 
+import com.mx.mybatis_plus.pojo.User;
 import com.mx.mybatis_plus.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 马祥
@@ -22,5 +26,28 @@ public class ServiceTest {
     public void testGetCount() throws Exception {
         long count = userService.count();
         System.out.println("记录总数为："+count);
+    }
+
+    @Test
+    /**
+     * 测试批量添加数据
+     */
+    public void testSaveMore(){
+        List<User> list = new ArrayList<>();
+        for (int i = 1; i <= 10 ; i++) {
+            User user = new User();
+            user.setName("jay"+i);
+            user.setEmail("maxiang@"+i);
+            user.setAge(18+i);
+            list.add(user);
+        }
+        boolean b = userService.saveBatch(list);
+        System.out.println(b);
+    }
+
+    @Test
+    public void testDelete(){
+        boolean remove = userService.removeById(1636368091577360385L);
+        System.out.println("是否删除成功：" + remove);
     }
 }
